@@ -7,7 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface ExpenseTrackerUserRepository {
 
     @Query(value = "SELECT id FROM users WHERE email=?1 AND WHERE password=?2", nativeQuery = true)
-    Integer getUserID(String email, String password);
-
-
+    Long getUserID(String email, String password);
 }

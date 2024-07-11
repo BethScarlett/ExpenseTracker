@@ -1,0 +1,15 @@
+package com.example.ExpenseTracker.Backend.Repository;
+
+import com.example.ExpenseTracker.Backend.Model.Transaction;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ExpenseTrackerTransactionRepository extends JpaRepository<Transaction, Long> {
+
+    @Query("SELECT * FROM transactions WHERE user_id=?1")
+    List<Transaction> getTransactionsByUserID(long userID);
+}
