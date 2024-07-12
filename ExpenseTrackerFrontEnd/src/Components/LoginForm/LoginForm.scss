@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.loginform {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: solid 2px black;
+  border-radius: 5px;
+  width: 80vw;
+  max-width: 450px;
+  min-height: 265px;
+  margin: auto;
+
+  &__input {
+    width: 70vw;
+    min-width: 150px;
+    max-width: 300px;
+    margin: 10px 0;
+  }
+
+  &__submit {
+    width: 40vw;
+    min-width: 100px;
+    max-width: 200px;
+    margin: 20px 0;
+  }
+
+  &__links {
+    display: flex;
+    max-width: 160px;
+    font-size: 12px;
+    margin-top: 2px;
+
+    &--signup {
+      min-width: 50px;
+    }
+  }
+}
