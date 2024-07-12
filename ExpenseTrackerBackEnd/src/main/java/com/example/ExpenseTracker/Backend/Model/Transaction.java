@@ -11,8 +11,9 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String transaction_name;
-    private Float transaction_amount;
-    private Date timestamp;
+    private double transaction_amount;
+    private String date;
+    private String time;
     private String category;
 
     @ManyToOne
@@ -23,11 +24,11 @@ public class Transaction {
 
     }
 
-    public Transaction(long id, String transaction_name, Float transaction_amount, Date timestamp, String category) {
+    public Transaction(long id, String transaction_name, Float transaction_amount, String date, String category) {
         this.id = id;
         this.transaction_name = transaction_name;
         this.transaction_amount = transaction_amount;
-        this.timestamp = timestamp;
+        this.date = date;
         this.category = category;
     }
 
@@ -47,20 +48,20 @@ public class Transaction {
         this.transaction_name = transaction_name;
     }
 
-    public Float getTransaction_amount() {
+    public double getTransaction_amount() {
         return transaction_amount;
     }
 
-    public void setTransaction_amount(Float transaction_amount) {
+    public void setTransaction_amount(double transaction_amount) {
         this.transaction_amount = transaction_amount;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public String getDate() {
+        return date;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getCategory() {
