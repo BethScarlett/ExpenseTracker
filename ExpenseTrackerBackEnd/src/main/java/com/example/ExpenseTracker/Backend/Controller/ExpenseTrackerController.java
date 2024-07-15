@@ -2,6 +2,7 @@ package com.example.ExpenseTracker.Backend.Controller;
 
 import com.example.ExpenseTracker.Backend.Model.Transaction;
 import com.example.ExpenseTracker.Backend.Service.ExpenseTrackerService;
+import com.example.ExpenseTracker.Backend.Types.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ public class ExpenseTrackerController {
     //READ
     //Verify user details
     @GetMapping("/verify")
-    public List<Transaction> verifyUser (@RequestBody String[] userCredentials) {
+    public List<Transaction> verifyUser (@RequestBody Login userCredentials) {
         Long userID = expenseTrackerService.verifyUser(userCredentials);
         if (!(userID == null)) {
             return expenseTrackerService.getUserTransactions(userID);
