@@ -24,11 +24,12 @@ public class Transaction {
 
     }
 
-    public Transaction(long id, String transaction_name, Float transaction_amount, String date, String category) {
+    public Transaction(long id, String transaction_name, double transaction_amount, String date, String time, String category) {
         this.id = id;
         this.transaction_name = transaction_name;
         this.transaction_amount = transaction_amount;
         this.date = date;
+        this.time = time;
         this.category = category;
     }
 
@@ -62,6 +63,14 @@ public class Transaction {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getCategory() {

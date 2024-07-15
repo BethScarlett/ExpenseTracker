@@ -4,14 +4,13 @@ import com.example.ExpenseTracker.Backend.Model.Transaction;
 import com.example.ExpenseTracker.Backend.Service.ExpenseTrackerService;
 import com.example.ExpenseTracker.Backend.Types.Login;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173/")
 public class ExpenseTrackerController {
 
     @Autowired
@@ -22,7 +21,7 @@ public class ExpenseTrackerController {
 
     //READ
     //Verify user details
-    @GetMapping("/verify")
+    @PostMapping("/verify")
     public List<Transaction> verifyUser (@RequestBody Login userCredentials) {
         Long userID = expenseTrackerService.verifyUser(userCredentials);
         if (!(userID == null)) {

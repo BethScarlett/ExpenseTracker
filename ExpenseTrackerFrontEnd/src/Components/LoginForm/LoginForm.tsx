@@ -5,9 +5,10 @@ import Login from "../../Types/LoginType";
 
 type LoginFormProps = {
   handleLogin: (details: Login) => void;
+  userNotFound: boolean;
 };
 
-const LoginForm = ({ handleLogin }: LoginFormProps) => {
+const LoginForm = ({ handleLogin, userNotFound }: LoginFormProps) => {
   const [formData, setFormData] = useState<Login>({
     email: "",
     password: "",
@@ -85,6 +86,7 @@ const LoginForm = ({ handleLogin }: LoginFormProps) => {
             <label>Please enter a valid password</label>
           ) : null}
         </div>
+        {userNotFound ? <label>No user found with those details</label> : null}
         <button className="loginform__submit">Login</button>
         <div className="loginform__links">
           <Link className="loginform__links loginform__links--signup" to={"/"}>
