@@ -3,6 +3,7 @@ package com.example.ExpenseTracker.Backend.Service;
 import com.example.ExpenseTracker.Backend.Model.Transaction;
 import com.example.ExpenseTracker.Backend.Repository.ExpenseTrackerTransactionRepository;
 import com.example.ExpenseTracker.Backend.Repository.ExpenseTrackerUserRepository;
+import com.example.ExpenseTracker.Backend.Types.Login;
 import com.example.ExpenseTracker.Backend.Utils.ExpenseTrackerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,11 @@ public class ExpenseTrackerService {
 
     //READ
     //Verify user details
-    public Long verifyUser (String[] userCredentials) {
-        if (!userCredentials[0].contains("@")) {
+    public Long verifyUser (Login userCredentials) {
+        if (!userCredentials.getEmail().contains("@")) {
             ExpenseTrackerUtils.handleSwapElements(userCredentials);
         }
-        return expenseTrackerUserRepository.getUserID(userCredentials[0], userCredentials[1]);
+        return expenseTrackerUserRepository.getUserID(userCredentials.getEmail(), userCredentials.getPassword());
     }
 
     //Get transactional details
