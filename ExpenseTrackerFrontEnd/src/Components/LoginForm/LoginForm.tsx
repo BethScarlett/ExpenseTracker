@@ -28,7 +28,7 @@ const LoginForm = ({ handleLogin }: LoginFormProps) => {
     e.preventDefault();
     handleValidation(formData);
     if (validDetails) {
-      console.log(formData);
+      handleLogin(formData);
     }
   };
 
