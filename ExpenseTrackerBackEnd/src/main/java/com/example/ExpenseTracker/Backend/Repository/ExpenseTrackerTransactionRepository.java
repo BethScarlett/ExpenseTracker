@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface ExpenseTrackerTransactionRepository extends JpaRepository<Transaction, Long> {
 
-    @Query(value = "SELECT * FROM transactions WHERE user_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM transaction WHERE user_id = ?1", nativeQuery = true)
     List<Transaction> getTransactionsByUserID(long userID);
 }

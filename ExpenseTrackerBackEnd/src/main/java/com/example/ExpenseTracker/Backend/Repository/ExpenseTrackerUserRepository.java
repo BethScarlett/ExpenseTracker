@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ExpenseTrackerUserRepository extends JpaRepository<User, Long> {
 
-    @Query(value = "SELECT id FROM users WHERE email=?1 AND WHERE password=?2", nativeQuery = true)
+    @Query(value = "SELECT id FROM expense_tracker.user WHERE email=?1 AND password=?2", nativeQuery = true)
     Long getUserID(String email, String password);
 }
