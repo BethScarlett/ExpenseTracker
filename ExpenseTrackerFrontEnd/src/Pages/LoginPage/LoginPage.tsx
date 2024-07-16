@@ -1,6 +1,6 @@
 import "./LoginPage.scss";
-import LoginForm from "../Components/LoginForm/LoginForm";
-import Login from "../Types/LoginType";
+import LoginForm from "../../Components/LoginForm/LoginForm";
+import Login from "../../Types/LoginType";
 
 type LoginPageProps = {
   handleLogin: (details: Login) => void;
