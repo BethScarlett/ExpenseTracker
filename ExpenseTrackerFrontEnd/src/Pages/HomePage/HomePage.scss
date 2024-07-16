@@ -8,3 +8,32 @@ body {
   height: 100dvh;
   background: linear-gradient(to bottom, #cdf1ff, #ffb9b9);
 }
+
+.homepage-title {
+  text-align: center;
+}
+
+.homepage-total {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50vw;
+  margin: auto;
+
+  &__number {
+    margin: 30px 0;
+  }
+
+  &__buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.homepage-transactions {
+  margin-top: 20px;
+  &__transaction {
+    margin-bottom: 5px;
+  }
+}
