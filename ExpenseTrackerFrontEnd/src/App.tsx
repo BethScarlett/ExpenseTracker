@@ -1,10 +1,12 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import Login from "./Types/LoginType";
 import { useState } from "react";
+import HomePage from "./Pages/HomePage/HomePage";
 
 const App = () => {
+  const [userFound, setUserFound] = useState<boolean>(false);
   const [userNotFound, setUserNotFound] = useState<boolean>(false);
 
   const handleLogin = async (details: Login) => {
@@ -18,11 +20,11 @@ const App = () => {
       });
       const result = await response.json();
       console.log(result);
-      setUserNotFound(false);
+      setUserFound(true);
     } catch (error) {
       console.log("Incorrect details");
-      console.log(error);
       setUserNotFound(true);
+      console.log(error);
     }
   };
 
@@ -33,12 +35,17 @@ const App = () => {
           <Route
             path="/"
             element={
-              <LoginPage
-                handleLogin={handleLogin}
-                userNotFound={userNotFound}
-              />
+              userFound ? (
+                <Navigate replace to="/home" />
+              ) : (
+                <LoginPage
+                  handleLogin={handleLogin}
+                  userNotFound={userNotFound}
+                />
+              )
             }
           />
+          <Route path="/home" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </div>

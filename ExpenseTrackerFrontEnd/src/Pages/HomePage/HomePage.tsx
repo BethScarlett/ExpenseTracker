@@ -1,7 +1,9 @@
 import "./HomePage.scss";
 
 const HomePage = () => {
-  return <div></div>;
+  console.log("Home page opening");
+
+  return <div>This is the home page</div>;
 };
 
 export default HomePage;
