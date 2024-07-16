@@ -4,10 +4,12 @@ import LoginPage from "./Pages/LoginPage/LoginPage";
 import Login from "./Types/LoginType";
 import { useState } from "react";
 import HomePage from "./Pages/HomePage/HomePage";
+import Transaction from "./Types/TransactionType";
 
 const App = () => {
   const [userFound, setUserFound] = useState<boolean>(false);
   const [userNotFound, setUserNotFound] = useState<boolean>(false);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const handleLogin = async (details: Login) => {
     try {
@@ -19,7 +21,7 @@ const App = () => {
         body: JSON.stringify(details),
       });
       const result = await response.json();
-      console.log(result);
+      setTransactions(result);
       setUserFound(true);
     } catch (error) {
       console.log("Incorrect details");
@@ -45,7 +47,10 @@ const App = () => {
               )
             }
           />
-          <Route path="/home" element={<HomePage />} />
+          <Route
+            path="/home"
+            element={<HomePage transactions={transactions} />}
+          />
         </Routes>
       </BrowserRouter>
     </div>
