@@ -1,12 +1,57 @@
 import TransactionTab from "../../Components/TransactionTab/TransactionTab";
 import Transaction from "../../Types/TransactionType";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import "./HomePage.scss";
 
 type HomePageProps = {
   transactions: Transaction[];
 };
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
 const HomePage = ({ transactions }: HomePageProps) => {
+  const handleGetDistinctCategories = () => {
+    let barChartLabels: string[] = [];
+    transactions.map((transaction) => {
+      if (!barChartLabels.includes(transaction.category)) {
+        barChartLabels.push(transaction.category);
+      }
+    });
+    return barChartLabels;
+  };
+
+  const handleGetCategoryTotals = () => {
+    let tempCategories: string[] = [];
+    let barChartData: number[] = [];
+
+    transactions.map((transaction) => {
+      if (!tempCategories.includes(transaction.category)) {
+        tempCategories.push(transaction.category);
+        barChartData.push(transaction.transaction_amount);
+      } else {
+        const i = tempCategories.indexOf(transaction.category);
+        barChartData[i] += transaction.transaction_amount;
+      }
+    });
+    return barChartData;
+  };
+
   const calculateTotal = () => {
     let total: number = 0;
     transactions.forEach((transaction) => {
