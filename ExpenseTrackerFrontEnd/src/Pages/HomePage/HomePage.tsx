@@ -26,6 +26,9 @@ ChartJS.register(
 );
 
 const HomePage = ({ transactions }: HomePageProps) => {
+  //TODO - Refactor code to use state to store categories and amounts, and reduce functions to one
+  const options = {};
+
   const handleGetDistinctCategories = () => {
     let barChartLabels: string[] = [];
     transactions.map((transaction) => {
@@ -33,23 +36,25 @@ const HomePage = ({ transactions }: HomePageProps) => {
         barChartLabels.push(transaction.category);
       }
     });
+    console.log(barChartLabels);
     return barChartLabels;
   };
 
   const handleGetCategoryTotals = () => {
     let tempCategories: string[] = [];
-    let barChartData: number[] = [];
+    let barChartTotals: number[] = [];
 
     transactions.map((transaction) => {
       if (!tempCategories.includes(transaction.category)) {
         tempCategories.push(transaction.category);
-        barChartData.push(transaction.transaction_amount);
+        barChartTotals.push(transaction.transaction_amount);
       } else {
         const i = tempCategories.indexOf(transaction.category);
-        barChartData[i] += transaction.transaction_amount;
+        barChartTotals[i] += transaction.transaction_amount;
       }
     });
-    return barChartData;
+    console.log(barChartTotals);
+    return barChartTotals;
   };
 
   const calculateTotal = () => {
@@ -58,6 +63,18 @@ const HomePage = ({ transactions }: HomePageProps) => {
       total += transaction.transaction_amount;
     });
     return Math.round(total * 100) / 100;
+  };
+
+  const barChartData = {
+    labels: handleGetDistinctCategories(),
+    datasets: [
+      {
+        label: "Transactions",
+        data: handleGetCategoryTotals(),
+        backgroundColor: ["rgba(255, 0, 0)", "rgba(0, 255, 0)"],
+        borderWidth: 1,
+      },
+    ],
   };
 
   return (
@@ -82,6 +99,9 @@ const HomePage = ({ transactions }: HomePageProps) => {
             />
           </div>
         ))}
+      </div>
+      <div>
+        <Bar options={options} data={barChartData} />
       </div>
     </>
   );
