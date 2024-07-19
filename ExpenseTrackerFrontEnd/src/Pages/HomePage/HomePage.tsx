@@ -12,6 +12,9 @@ import {
 } from "chart.js";
 import "./HomePage.scss";
 import { useEffect, useState } from "react";
+import { handleSelectMonth } from "../../Utils/dateUtils";
+import RightArrow from "/up-arrow.png";
+import LeftArrow from "/down-arrow.png";
 
 type HomePageProps = {
   transactions: Transaction[];
@@ -29,6 +32,7 @@ ChartJS.register(
 const HomePage = ({ transactions }: HomePageProps) => {
   //TODO - Refactor code to use state to store categories and amounts, and reduce functions to one
   const [stateTransactions, setStateTransactions] = useState<Transaction[]>([]);
+  const [selectedMonth, setSelectedMonth] = useState<number>(1);
   const options = {};
 
   useEffect(() => {
@@ -86,12 +90,54 @@ const HomePage = ({ transactions }: HomePageProps) => {
     ],
   };
 
+  //TODO - Find a way to put these into one function
+
+  const handleIncrementMonth = () => {
+    if (selectedMonth > 0) {
+      console.log("Selected month index is " + (selectedMonth - 1));
+      setSelectedMonth(selectedMonth - 1);
+    }
+  };
+
+  const handleDecrementMonth = () => {
+    if (selectedMonth < 11) {
+      console.log("Selected month index is " + (selectedMonth + 1));
+      setSelectedMonth(selectedMonth + 1);
+    }
+  };
+
+  // const handleChangeMonth = () => {
+  //   if (selectedMonth > 1 && e.target == "left-arrow") {
+  //     console.log("Selected month index is " + (selectedMonth - 1));
+  //     setSelectedMonth(selectedMonth - 1);
+  //   } else if (selectedMonth < 12 && e.id == "right-arrow") {
+  //     console.log("Selected month index is " + (selectedMonth + 1));
+  //     setSelectedMonth(selectedMonth + 1);
+  //   }
+  // };
+
   return (
     <>
       <h1 className="homepage-title">Manage Money</h1>
-      <h5 className="homepage-title"> Total spend:</h5>
-      <div className="homepage-total">
-        <h1 className="homepage-total__number">£{calculateTotal()}</h1>
+      <h5 className="homepage-title">
+        Total spend for {handleSelectMonth(selectedMonth)}:
+      </h5>
+      <div>
+        <div className="homepage-total">
+          <img
+            src={LeftArrow}
+            alt="Left Arrow"
+            id="left-arrow"
+            onClick={handleIncrementMonth}
+          />
+          <h1 className="homepage-total__number">£{calculateTotal()}</h1>
+          <img
+            src={RightArrow}
+            alt="Right Arrow"
+            id="right-arrow"
+            onClick={handleDecrementMonth}
+          />
+        </div>
         <div className="homepage-total__buttons">
           {/* <button>Week</button>
           <button>Month</button> */}

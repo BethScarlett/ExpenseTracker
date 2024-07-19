@@ -13,11 +13,23 @@ body {
   text-align: center;
 }
 
+#left-arrow {
+  max-height: 50px;
+  max-width: 50px;
+  rotate: 90deg;
+}
+
+#right-arrow {
+  max-height: 50px;
+  max-width: 50px;
+  rotate: 90deg;
+}
+
 .homepage-total {
   display: flex;
-  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
-  width: 50vw;
+  width: 80vw;
   margin: auto;
 
   &__number {
