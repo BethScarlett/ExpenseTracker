@@ -11,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import "./HomePage.scss";
+import { useEffect, useState } from "react";
 
 type HomePageProps = {
   transactions: Transaction[];
@@ -27,16 +28,25 @@ ChartJS.register(
 
 const HomePage = ({ transactions }: HomePageProps) => {
   //TODO - Refactor code to use state to store categories and amounts, and reduce functions to one
+  const [stateTransactions, setStateTransactions] = useState<Transaction[]>([]);
   const options = {};
+
+  useEffect(() => {
+    const reverse: Transaction[] = [];
+    transactions.map((transaction) => {
+      reverse.unshift(transaction);
+    });
+
+    setStateTransactions(reverse);
+  }, []);
 
   const handleGetDistinctCategories = () => {
     let barChartLabels: string[] = [];
-    transactions.map((transaction) => {
+    stateTransactions.map((transaction) => {
       if (!barChartLabels.includes(transaction.category)) {
         barChartLabels.push(transaction.category);
       }
     });
-    console.log(barChartLabels);
     return barChartLabels;
   };
 
@@ -44,7 +54,7 @@ const HomePage = ({ transactions }: HomePageProps) => {
     let tempCategories: string[] = [];
     let barChartTotals: number[] = [];
 
-    transactions.map((transaction) => {
+    stateTransactions.map((transaction) => {
       if (!tempCategories.includes(transaction.category)) {
         tempCategories.push(transaction.category);
         barChartTotals.push(transaction.transaction_amount);
@@ -53,13 +63,12 @@ const HomePage = ({ transactions }: HomePageProps) => {
         barChartTotals[i] += transaction.transaction_amount;
       }
     });
-    console.log(barChartTotals);
     return barChartTotals;
   };
 
   const calculateTotal = () => {
     let total: number = 0;
-    transactions.forEach((transaction) => {
+    stateTransactions.forEach((transaction) => {
       total += transaction.transaction_amount;
     });
     return Math.round(total * 100) / 100;
@@ -84,12 +93,12 @@ const HomePage = ({ transactions }: HomePageProps) => {
       <div className="homepage-total">
         <h1 className="homepage-total__number">£{calculateTotal()}</h1>
         <div className="homepage-total__buttons">
-          <button>Week</button>
-          <button>Month</button>
+          {/* <button>Week</button>
+          <button>Month</button> */}
         </div>
       </div>
       <div className="homepage-transactions">
-        {transactions.map((transaction, i) => (
+        {stateTransactions.map((transaction, i) => (
           <div key={i} className="homepage-transactions__transaction">
             <TransactionTab
               name={transaction.transaction_name}
