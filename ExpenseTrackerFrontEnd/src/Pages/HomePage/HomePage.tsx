@@ -73,7 +73,16 @@ const HomePage = ({ transactions }: HomePageProps) => {
   const calculateTotal = () => {
     let total: number = 0;
     stateTransactions.forEach((transaction) => {
-      total += transaction.transaction_amount;
+      const transacDateSplit: string = transaction.date.split("-")[1];
+      let selectedMonthString: string = (selectedMonth + 1).toString();
+
+      if (transacDateSplit.split("")[0] == "0") {
+        selectedMonthString = "0" + selectedMonthString;
+      }
+
+      if (transacDateSplit == selectedMonthString) {
+        total += transaction.transaction_amount;
+      }
     });
     return Math.round(total * 100) / 100;
   };
@@ -91,6 +100,7 @@ const HomePage = ({ transactions }: HomePageProps) => {
   };
 
   //TODO - Find a way to put these into one function
+  //TODO - Make it so you can't go past the latest month
 
   const handleIncrementMonth = () => {
     if (selectedMonth > 0) {
