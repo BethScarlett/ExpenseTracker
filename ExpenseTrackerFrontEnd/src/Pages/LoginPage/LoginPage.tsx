@@ -11,7 +11,11 @@ const LoginPage = ({ handleLogin, userNotFound }: LoginPageProps) => {
   return (
     <div className="loginpage">
       <h1 className="loginpage__title">Manage Money</h1>
-      <LoginForm handleLogin={handleLogin} userNotFound={userNotFound} />
+      <LoginForm
+        handleLogin={handleLogin}
+        userNotFound={userNotFound}
+        formType="login"
+      />
     </div>
   );
 };
