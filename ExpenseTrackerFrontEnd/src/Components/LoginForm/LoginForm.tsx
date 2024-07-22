@@ -1,6 +1,5 @@
 import { FormEvent, useState } from "react";
 import "./LoginForm.scss";
-import { Link } from "react-router-dom";
 import Login from "../../Types/LoginType";
 import Account from "../../Types/AccountType";
 
@@ -169,6 +168,7 @@ const LoginForm = ({
               <label>Please enter a valid password</label>
             ) : null}
           </div>
+          <button className="loginform__submit">Login</button>
         </form>
       )}
       {formType == "login" && (
@@ -207,19 +207,11 @@ const LoginForm = ({
               <label>Please enter a valid password</label>
             ) : null}
           </div>
+          <button className="loginform__submit">Login</button>
         </form>
       )}
 
       {userNotFound ? <label>No user found with those details</label> : null}
-      <button className="loginform__submit">Login</button>
-      <div className="loginform__links">
-        <Link className="loginform__links loginform__links--signup" to={"/"}>
-          Sign Up
-        </Link>{" "}
-        <Link className="loginform__links loginform__links--forgpass" to={"/"}>
-          Forgotten Password
-        </Link>
-      </div>
     </>
   );
 };

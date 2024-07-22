@@ -5,6 +5,7 @@ import Login from "./Types/LoginType";
 import { useState } from "react";
 import HomePage from "./Pages/HomePage/HomePage";
 import Transaction from "./Types/TransactionType";
+import CreateAccountPage from "./Pages/CreateAccountPage/CreateAccountPage";
 
 const App = () => {
   const [userFound, setUserFound] = useState<boolean>(false);
@@ -47,6 +48,7 @@ const App = () => {
               )
             }
           />
+          <Route path="/create" element={<CreateAccountPage />} />
           <Route
             path="/home"
             element={<HomePage transactions={transactions} />}
