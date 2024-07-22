@@ -1,10 +1,19 @@
 import LoginForm from "../../Components/LoginForm/LoginForm";
+import Account from "../../Types/AccountType";
 import "./CreateAccountPage.scss";
 
-const CreateAccountPage = () => {
+type CreateAccountPageProps = {
+  handleCreateAccount: (details: Account) => void;
+};
+
+const CreateAccountPage = ({ handleCreateAccount }: CreateAccountPageProps) => {
   return (
     <div>
-      <LoginForm userNotFound={false} formType="newUser" />
+      <LoginForm
+        userNotFound={false}
+        formType="newUser"
+        handleCreateAccount={handleCreateAccount}
+      />
     </div>
   );
 };

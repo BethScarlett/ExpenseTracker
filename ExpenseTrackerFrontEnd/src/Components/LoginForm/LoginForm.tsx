@@ -5,14 +5,14 @@ import Account from "../../Types/AccountType";
 
 type LoginFormProps = {
   handleLogin?: (details: Login) => void;
-  handleCreateUser?: (details: Account) => void;
+  handleCreateAccount?: (details: Account) => void;
   userNotFound: boolean;
   formType: "login" | "newUser";
 };
 
 const LoginForm = ({
   handleLogin,
-  handleCreateUser,
+  handleCreateAccount,
   userNotFound,
   formType,
 }: LoginFormProps) => {
@@ -54,10 +54,10 @@ const LoginForm = ({
       if (validDetails) {
         handleLogin(loginData);
       }
-    } else if (formType == "newUser" && handleCreateUser != undefined) {
+    } else if (formType == "newUser" && handleCreateAccount != undefined) {
       handleValidation(accountData);
       if (validDetails) {
-        handleCreateUser(accountData);
+        handleCreateAccount(accountData);
       }
     }
   };
