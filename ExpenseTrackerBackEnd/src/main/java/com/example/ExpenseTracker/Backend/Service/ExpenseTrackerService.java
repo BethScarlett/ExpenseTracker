@@ -1,6 +1,7 @@
 package com.example.ExpenseTracker.Backend.Service;
 
 import com.example.ExpenseTracker.Backend.Model.Transaction;
+import com.example.ExpenseTracker.Backend.Model.User;
 import com.example.ExpenseTracker.Backend.Repository.ExpenseTrackerTransactionRepository;
 import com.example.ExpenseTracker.Backend.Repository.ExpenseTrackerUserRepository;
 import com.example.ExpenseTracker.Backend.Types.Login;
@@ -20,7 +21,9 @@ public class ExpenseTrackerService {
     ExpenseTrackerTransactionRepository expenseTrackerTransactionRepository;
 
     //CREATE
-    //**CURRENTLY UNUSED**//
+    public void addUser (User newCredentials) {
+        expenseTrackerUserRepository.save(newCredentials);
+    }
 
     //READ
     //Verify user details

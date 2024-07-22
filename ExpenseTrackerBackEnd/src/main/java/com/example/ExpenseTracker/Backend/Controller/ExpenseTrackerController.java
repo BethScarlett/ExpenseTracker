@@ -1,6 +1,7 @@
 package com.example.ExpenseTracker.Backend.Controller;
 
 import com.example.ExpenseTracker.Backend.Model.Transaction;
+import com.example.ExpenseTracker.Backend.Model.User;
 import com.example.ExpenseTracker.Backend.Service.ExpenseTrackerService;
 import com.example.ExpenseTracker.Backend.Types.Login;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,10 @@ public class ExpenseTrackerController {
     ExpenseTrackerService expenseTrackerService;
 
     //CREATE
-    //**CURRENTLY UNUSED**//
+    @PutMapping("/create")
+    public void createUser (@RequestBody User newCredentials) {
+        expenseTrackerService.addUser(newCredentials);
+    }
 
     //READ
     //Verify user details
