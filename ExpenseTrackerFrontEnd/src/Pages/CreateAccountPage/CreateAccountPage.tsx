@@ -8,7 +8,7 @@ type CreateAccountPageProps = {
 
 const CreateAccountPage = ({ handleCreateAccount }: CreateAccountPageProps) => {
   return (
-    <div>
+    <div className="create-form">
       <LoginForm
         userNotFound={false}
         formType="newUser"

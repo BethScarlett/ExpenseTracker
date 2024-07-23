@@ -16,4 +16,18 @@ body {
     text-align: center;
     margin-bottom: 50px;
   }
+
+  &__links {
+    display: flex;
+    max-width: 250px;
+    font-size: 14px;
+    margin: auto;
+    margin-top: 2px;
+    text-decoration: none;
+    color: black;
+
+    &:hover {
+      color: red;
+    }
+  }
 }

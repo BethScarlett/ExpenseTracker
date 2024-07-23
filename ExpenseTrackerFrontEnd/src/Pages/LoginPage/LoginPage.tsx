@@ -18,14 +18,14 @@ const LoginPage = ({ handleLogin, userNotFound }: LoginPageProps) => {
         formType="login"
       />
       {userNotFound ? <label>No user found with those details</label> : null}
-      <div className="loginform__links">
+      <div className="loginpage__links">
         <Link
-          className="loginform__links loginform__links--signup"
+          className="loginpage__links loginpage__links--hover"
           to={"/create"}
         >
           Sign Up
         </Link>
-        <Link className="loginform__links loginform__links--forgpass" to={"/"}>
+        <Link className="loginpage__links loginpage__links--hover" to={"/"}>
           Forgotten Password
         </Link>
       </div>

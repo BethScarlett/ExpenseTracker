@@ -98,7 +98,7 @@ const LoginForm = ({
     <>
       {formType == "newUser" && (
         <form className="loginform" onSubmit={handleSubmit}>
-          <div>
+          <div className="loginform__input">
             <label
               htmlFor="firstname"
               className="loginform__input loginform__input--label"
@@ -116,7 +116,7 @@ const LoginForm = ({
               <label>Please enter a valid first name</label>
             ) : null}
           </div>
-          <div>
+          <div className="loginform__input">
             <label
               htmlFor="surname"
               className="loginform__input loginform__input--label"
