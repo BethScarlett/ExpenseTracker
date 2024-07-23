@@ -19,8 +19,9 @@ public class ExpenseTrackerController {
 
     //CREATE
     @PutMapping("/create")
-    public void createUser (@RequestBody User newCredentials) {
+    public User createUser (@RequestBody User newCredentials) {
         expenseTrackerService.addUser(newCredentials);
+        return newCredentials;
     }
 
     //READ
