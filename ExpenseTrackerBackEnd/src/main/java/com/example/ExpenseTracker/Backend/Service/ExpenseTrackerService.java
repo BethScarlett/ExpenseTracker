@@ -7,6 +7,7 @@ import com.example.ExpenseTracker.Backend.Repository.ExpenseTrackerUserRepositor
 import com.example.ExpenseTracker.Backend.Types.Login;
 import com.example.ExpenseTracker.Backend.Utils.ExpenseTrackerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public class ExpenseTrackerService {
     @Autowired
     ExpenseTrackerTransactionRepository expenseTrackerTransactionRepository;
 
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(13);
+
     //CREATE
     public void addUser (User newCredentials) {
         newCredentials.setPassword(ExpenseTrackerUtils.handleHashPassword(newCredentials.getPassword()));
@@ -32,9 +35,13 @@ public class ExpenseTrackerService {
         if (!userCredentials.getEmail().contains("@")) {
             ExpenseTrackerUtils.handleSwapElements(userCredentials);
         }
-        userCredentials.setPassword(ExpenseTrackerUtils.handleHashPassword(userCredentials.getPassword()));
-        System.out.println("Email: " + userCredentials.getEmail() + ". Password: " + userCredentials.getPassword());
-        return expenseTrackerUserRepository.getUserID(userCredentials.getEmail(), userCredentials.getPassword());
+        User retrievedUser = expenseTrackerUserRepository.findUserByEmail(userCredentials.getEmail());
+        if(encoder.matches(userCredentials.getPassword(), retrievedUser.getPassword())) {
+            return retrievedUser.getId();
+        } else {
+            return null;
+        }
+
     }
 
     //Get transactional details

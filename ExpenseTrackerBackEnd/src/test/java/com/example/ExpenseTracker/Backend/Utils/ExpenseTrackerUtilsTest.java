@@ -34,11 +34,24 @@ class ExpenseTrackerUtilsTest {
     }
 
     @Test
-    @DisplayName("Correctly hashes password")
+    @DisplayName("Correctly hash password")
     void handleHashPassword() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(13);
         String result = encoder.encode("password");
         System.out.println(result);
         assertTrue(encoder.matches("password", result));
+    }
+
+    @Test
+    @DisplayName("New encoder returns true on previous hash")
+    void handleMatchHashPassword() {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(13);
+        BCryptPasswordEncoder encoderTwo = new BCryptPasswordEncoder(13);
+        String result = encoder.encode("password");
+        System.out.println(result);
+        String resultTwo = encoderTwo.encode("password");
+        System.out.println(resultTwo);
+        assertTrue(encoder.matches("password", result));
+        assertTrue(encoderTwo.matches("password", result));
     }
 }
