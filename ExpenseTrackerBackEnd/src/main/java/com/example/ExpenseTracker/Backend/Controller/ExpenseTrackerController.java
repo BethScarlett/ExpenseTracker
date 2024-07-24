@@ -19,7 +19,7 @@ public class ExpenseTrackerController {
     //CREATE
     @PutMapping("/create")
     public User createUser (@RequestBody User newCredentials) {
-        if (expenseTrackerService.findUser(newCredentials.getEmail())) {
+        if (!(expenseTrackerService.findUser(newCredentials.getEmail()) == null)) {
             return null;
         } else {
             expenseTrackerService.addUser(newCredentials);
@@ -27,7 +27,6 @@ public class ExpenseTrackerController {
         }
     }
 
-    //READ
     //Verify user details
     @PostMapping("/verify")
     public List<Transaction> verifyUser (@RequestBody Login userCredentials) {
@@ -38,6 +37,11 @@ public class ExpenseTrackerController {
             return null;
         }
     }
+
+    //READ
+
+    //Check if user exists
+
 
     //Get transactional details
     @GetMapping("/transactions")

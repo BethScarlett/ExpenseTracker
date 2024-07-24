@@ -52,9 +52,7 @@ const App = () => {
       };
       handleLogin(login);
     } catch (error) {
-      //setUserNotFound(true);
       setExistingUser(true);
-      //console.log("Error");
     }
   };
 

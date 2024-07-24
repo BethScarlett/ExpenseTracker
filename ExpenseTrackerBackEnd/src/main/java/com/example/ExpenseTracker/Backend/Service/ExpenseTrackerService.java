@@ -35,9 +35,8 @@ public class ExpenseTrackerService {
     //READ
 
     //Check if user exists
-    public boolean findUser(String email) {
-        User existingUser = expenseTrackerUserRepository.findUserByEmail(email);
-        return (!(existingUser == null));
+    public User findUser(String email) {
+        return (expenseTrackerUserRepository.findUserByEmail(email));
     }
 
     //Verify user details
