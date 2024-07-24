@@ -25,11 +25,21 @@ public class ExpenseTrackerService {
 
     //CREATE
     public void addUser (User newCredentials) {
-        newCredentials.setPassword(ExpenseTrackerUtils.handleHashPassword(newCredentials.getPassword()));
-        expenseTrackerUserRepository.save(newCredentials);
+        User existingUser = expenseTrackerUserRepository.findUserByEmail(newCredentials.getEmail());
+        if (existingUser == null) {
+            newCredentials.setPassword(ExpenseTrackerUtils.handleHashPassword(newCredentials.getPassword()));
+            expenseTrackerUserRepository.save(newCredentials);
+        };
     }
 
     //READ
+
+    //Check if user exists
+    public boolean findUser(String email) {
+        User existingUser = expenseTrackerUserRepository.findUserByEmail(email);
+        return (!(existingUser == null));
+    }
+
     //Verify user details
     public Long verifyUser (Login userCredentials) {
         //TODO - Review if this is even doing anything

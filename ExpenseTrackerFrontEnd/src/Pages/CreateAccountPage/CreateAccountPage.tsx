@@ -3,12 +3,17 @@ import Account from "../../Types/AccountType";
 import "./CreateAccountPage.scss";
 
 type CreateAccountPageProps = {
+  existingUser: boolean;
   handleCreateAccount: (details: Account) => void;
 };
 
-const CreateAccountPage = ({ handleCreateAccount }: CreateAccountPageProps) => {
+const CreateAccountPage = ({
+  existingUser,
+  handleCreateAccount,
+}: CreateAccountPageProps) => {
   return (
     <div className="create-form">
+      {existingUser ? <label>User already exists</label> : null}
       <LoginForm
         userNotFound={false}
         formType="newUser"

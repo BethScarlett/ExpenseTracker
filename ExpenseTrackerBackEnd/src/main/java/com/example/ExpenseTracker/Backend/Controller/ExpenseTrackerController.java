@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173/")
@@ -20,8 +19,12 @@ public class ExpenseTrackerController {
     //CREATE
     @PutMapping("/create")
     public User createUser (@RequestBody User newCredentials) {
-        expenseTrackerService.addUser(newCredentials);
-        return newCredentials;
+        if (expenseTrackerService.findUser(newCredentials.getEmail())) {
+            return null;
+        } else {
+            expenseTrackerService.addUser(newCredentials);
+            return newCredentials;
+        }
     }
 
     //READ

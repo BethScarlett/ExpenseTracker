@@ -11,6 +11,7 @@ import Account from "./Types/AccountType";
 const App = () => {
   const [userFound, setUserFound] = useState<boolean>(false);
   const [userNotFound, setUserNotFound] = useState<boolean>(false);
+  const [existingUser, setExistingUser] = useState<boolean>(false);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const handleLogin = async (details: Login) => {
@@ -51,8 +52,9 @@ const App = () => {
       };
       handleLogin(login);
     } catch (error) {
-      setUserNotFound(true);
-      console.log("Error");
+      //setUserNotFound(true);
+      setExistingUser(true);
+      //console.log("Error");
     }
   };
 
@@ -79,7 +81,10 @@ const App = () => {
               userFound ? (
                 <Navigate replace to="/home" />
               ) : (
-                <CreateAccountPage handleCreateAccount={handleCreateAccount} />
+                <CreateAccountPage
+                  handleCreateAccount={handleCreateAccount}
+                  existingUser={existingUser}
+                />
               )
             }
           />
