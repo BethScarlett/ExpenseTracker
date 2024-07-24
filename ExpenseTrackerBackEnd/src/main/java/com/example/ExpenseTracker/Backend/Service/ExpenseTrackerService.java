@@ -32,16 +32,17 @@ public class ExpenseTrackerService {
     //READ
     //Verify user details
     public Long verifyUser (Login userCredentials) {
+        //TODO - Review if this is even doing anything
         if (!userCredentials.getEmail().contains("@")) {
             ExpenseTrackerUtils.handleSwapElements(userCredentials);
         }
         User retrievedUser = expenseTrackerUserRepository.findUserByEmail(userCredentials.getEmail());
-        if(encoder.matches(userCredentials.getPassword(), retrievedUser.getPassword())) {
-            return retrievedUser.getId();
-        } else {
+        if(retrievedUser == null) {
             return null;
+        } else if (encoder.matches(userCredentials.getPassword(), retrievedUser.getPassword())){
+            return retrievedUser.getId();
         }
-
+    return null;
     }
 
     //Get transactional details

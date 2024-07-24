@@ -38,6 +38,9 @@ class ExpenseTrackerUtilsTest {
     void handleHashPassword() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(13);
         String result = encoder.encode("password");
+        System.out.println("First password = " + encoder.encode("test"));
+        System.out.println("Second password = " + encoder.encode("oranges"));
+        System.out.println("Third password = " + encoder.encode("mason"));
         System.out.println(result);
         assertTrue(encoder.matches("password", result));
     }
