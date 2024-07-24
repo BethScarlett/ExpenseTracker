@@ -22,6 +22,7 @@ public class ExpenseTrackerService {
 
     //CREATE
     public void addUser (User newCredentials) {
+        newCredentials.setPassword(ExpenseTrackerUtils.handleHashPassword(newCredentials.getPassword()));
         expenseTrackerUserRepository.save(newCredentials);
     }
 
@@ -31,6 +32,8 @@ public class ExpenseTrackerService {
         if (!userCredentials.getEmail().contains("@")) {
             ExpenseTrackerUtils.handleSwapElements(userCredentials);
         }
+        userCredentials.setPassword(ExpenseTrackerUtils.handleHashPassword(userCredentials.getPassword()));
+        System.out.println("Email: " + userCredentials.getEmail() + ". Password: " + userCredentials.getPassword());
         return expenseTrackerUserRepository.getUserID(userCredentials.getEmail(), userCredentials.getPassword());
     }
 
