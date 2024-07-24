@@ -36,7 +36,8 @@ public class ExpenseTrackerService {
 
     //Check if user exists
     public User findUser(String email) {
-        return (expenseTrackerUserRepository.findUserByEmail(email));
+        String cleanEmail = email.substring(1, email.length() - 1);
+        return (expenseTrackerUserRepository.findUserByEmail(cleanEmail));
     }
 
     //Verify user details
@@ -60,7 +61,11 @@ public class ExpenseTrackerService {
     }
 
     //UPDATE
-    //**CURRENTLY UNUSED**//
+    public void updateUser (User newCredentials) {
+        newCredentials.setId(expenseTrackerUserRepository.findUserByEmail(newCredentials.getEmail()).getId());
+        newCredentials.setPassword(ExpenseTrackerUtils.handleHashPassword(newCredentials.getPassword()));
+        expenseTrackerUserRepository.save(newCredentials);
+    }
 
     //DELETE
     //**CURRENTLY UNUSED**//

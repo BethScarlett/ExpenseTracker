@@ -7,6 +7,7 @@ import HomePage from "./Pages/HomePage/HomePage";
 import Transaction from "./Types/TransactionType";
 import CreateAccountPage from "./Pages/CreateAccountPage/CreateAccountPage";
 import Account from "./Types/AccountType";
+import ForgottenPasswordPage from "./Pages/ForgottenPasswordPage/ForgottenPasswordPage";
 
 const App = () => {
   const [userFound, setUserFound] = useState<boolean>(false);
@@ -15,8 +16,6 @@ const App = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const handleLogin = async (details: Login) => {
-    console.log(details);
-
     try {
       const response = await fetch("http://localhost:8080/verify", {
         method: "POST",
@@ -89,6 +88,10 @@ const App = () => {
           <Route
             path="/home"
             element={<HomePage transactions={transactions} />}
+          />
+          <Route
+            path="/forgotten+password"
+            element={<ForgottenPasswordPage />}
           />
         </Routes>
       </BrowserRouter>

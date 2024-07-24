@@ -41,7 +41,10 @@ public class ExpenseTrackerController {
     //READ
 
     //Check if user exists
-
+    @PutMapping("/find")
+    public User findUser (@RequestBody String email) {
+        return expenseTrackerService.findUser(email);
+    }
 
     //Get transactional details
     @GetMapping("/transactions")
@@ -50,7 +53,11 @@ public class ExpenseTrackerController {
     }
 
     //UPDATE
-    //**CURRENTLY UNUSED**//
+    @PutMapping("/update")
+    public User updateUser (@RequestBody User newCredentials) {
+        expenseTrackerService.updateUser(newCredentials);
+        return newCredentials;
+    }
 
     //DELETE
     //**CURRENTLY UNUSED**//
