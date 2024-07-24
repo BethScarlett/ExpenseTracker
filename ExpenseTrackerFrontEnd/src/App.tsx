@@ -14,6 +14,8 @@ const App = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const handleLogin = async (details: Login) => {
+    console.log(details);
+
     try {
       const response = await fetch("http://localhost:8080/verify", {
         method: "POST",
