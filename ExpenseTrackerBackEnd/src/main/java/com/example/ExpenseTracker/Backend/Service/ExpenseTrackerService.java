@@ -25,11 +25,21 @@ public class ExpenseTrackerService {
 
     //CREATE
     public void addUser (User newCredentials) {
-        newCredentials.setPassword(ExpenseTrackerUtils.handleHashPassword(newCredentials.getPassword()));
-        expenseTrackerUserRepository.save(newCredentials);
+        User existingUser = expenseTrackerUserRepository.findUserByEmail(newCredentials.getEmail());
+        if (existingUser == null) {
+            newCredentials.setPassword(ExpenseTrackerUtils.handleHashPassword(newCredentials.getPassword()));
+            expenseTrackerUserRepository.save(newCredentials);
+        };
     }
 
     //READ
+
+    //Check if user exists
+    public User findUser(String email) {
+        String cleanEmail = email.substring(1, email.length() - 1);
+        return (expenseTrackerUserRepository.findUserByEmail(cleanEmail));
+    }
+
     //Verify user details
     public Long verifyUser (Login userCredentials) {
         //TODO - Review if this is even doing anything
@@ -51,7 +61,11 @@ public class ExpenseTrackerService {
     }
 
     //UPDATE
-    //**CURRENTLY UNUSED**//
+    public void updateUser (User newCredentials) {
+        newCredentials.setId(expenseTrackerUserRepository.findUserByEmail(newCredentials.getEmail()).getId());
+        newCredentials.setPassword(ExpenseTrackerUtils.handleHashPassword(newCredentials.getPassword()));
+        expenseTrackerUserRepository.save(newCredentials);
+    }
 
     //DELETE
     //**CURRENTLY UNUSED**//

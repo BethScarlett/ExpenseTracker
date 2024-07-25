@@ -25,7 +25,10 @@ const LoginPage = ({ handleLogin, userNotFound }: LoginPageProps) => {
         >
           Sign Up
         </Link>
-        <Link className="loginpage__links loginpage__links--hover" to={"/"}>
+        <Link
+          className="loginpage__links loginpage__links--hover"
+          to={"/forgotten+password"}
+        >
           Forgotten Password
         </Link>
       </div>

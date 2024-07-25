@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173/")
@@ -20,11 +19,14 @@ public class ExpenseTrackerController {
     //CREATE
     @PutMapping("/create")
     public User createUser (@RequestBody User newCredentials) {
-        expenseTrackerService.addUser(newCredentials);
-        return newCredentials;
+        if (!(expenseTrackerService.findUser(newCredentials.getEmail()) == null)) {
+            return null;
+        } else {
+            expenseTrackerService.addUser(newCredentials);
+            return newCredentials;
+        }
     }
 
-    //READ
     //Verify user details
     @PostMapping("/verify")
     public List<Transaction> verifyUser (@RequestBody Login userCredentials) {
@@ -36,6 +38,14 @@ public class ExpenseTrackerController {
         }
     }
 
+    //READ
+
+    //Check if user exists
+    @PutMapping("/find")
+    public User findUser (@RequestBody String email) {
+        return expenseTrackerService.findUser(email);
+    }
+
     //Get transactional details
     @GetMapping("/transactions")
     public void getUserTransactions () {
@@ -43,7 +53,11 @@ public class ExpenseTrackerController {
     }
 
     //UPDATE
-    //**CURRENTLY UNUSED**//
+    @PutMapping("/update")
+    public User updateUser (@RequestBody User newCredentials) {
+        expenseTrackerService.updateUser(newCredentials);
+        return newCredentials;
+    }
 
     //DELETE
     //**CURRENTLY UNUSED**//

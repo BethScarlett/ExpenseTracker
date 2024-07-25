@@ -116,16 +116,6 @@ const HomePage = ({ transactions }: HomePageProps) => {
     }
   };
 
-  // const handleChangeMonth = () => {
-  //   if (selectedMonth > 1 && e.target == "left-arrow") {
-  //     console.log("Selected month index is " + (selectedMonth - 1));
-  //     setSelectedMonth(selectedMonth - 1);
-  //   } else if (selectedMonth < 12 && e.id == "right-arrow") {
-  //     console.log("Selected month index is " + (selectedMonth + 1));
-  //     setSelectedMonth(selectedMonth + 1);
-  //   }
-  // };
-
   return (
     <>
       <h1 className="homepage-title">Manage Money</h1>

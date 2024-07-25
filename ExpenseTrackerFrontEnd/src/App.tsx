@@ -7,15 +7,15 @@ import HomePage from "./Pages/HomePage/HomePage";
 import Transaction from "./Types/TransactionType";
 import CreateAccountPage from "./Pages/CreateAccountPage/CreateAccountPage";
 import Account from "./Types/AccountType";
+import ForgottenPasswordPage from "./Pages/ForgottenPasswordPage/ForgottenPasswordPage";
 
 const App = () => {
   const [userFound, setUserFound] = useState<boolean>(false);
   const [userNotFound, setUserNotFound] = useState<boolean>(false);
+  const [existingUser, setExistingUser] = useState<boolean>(false);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const handleLogin = async (details: Login) => {
-    console.log(details);
-
     try {
       const response = await fetch("http://localhost:8080/verify", {
         method: "POST",
@@ -51,8 +51,7 @@ const App = () => {
       };
       handleLogin(login);
     } catch (error) {
-      setUserNotFound(true);
-      console.log("Error");
+      setExistingUser(true);
     }
   };
 
@@ -79,13 +78,20 @@ const App = () => {
               userFound ? (
                 <Navigate replace to="/home" />
               ) : (
-                <CreateAccountPage handleCreateAccount={handleCreateAccount} />
+                <CreateAccountPage
+                  handleCreateAccount={handleCreateAccount}
+                  existingUser={existingUser}
+                />
               )
             }
           />
           <Route
             path="/home"
             element={<HomePage transactions={transactions} />}
+          />
+          <Route
+            path="/forgotten+password"
+            element={<ForgottenPasswordPage />}
           />
         </Routes>
       </BrowserRouter>
