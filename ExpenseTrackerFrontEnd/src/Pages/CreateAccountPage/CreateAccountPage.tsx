@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import LoginForm from "../../Components/LoginForm/LoginForm";
 import Account from "../../Types/AccountType";
 import "./CreateAccountPage.scss";
@@ -19,7 +20,12 @@ const CreateAccountPage = ({
         formType="newUser"
         handleCreateAccount={handleCreateAccount}
       />
-      {/* TODO - Add link back to home page */}
+      <Link
+        to={"/"}
+        className="frgtn-pass-form__link frgtn-pass-form__link--hover"
+      >
+        Back to login
+      </Link>
     </div>
   );
 };
