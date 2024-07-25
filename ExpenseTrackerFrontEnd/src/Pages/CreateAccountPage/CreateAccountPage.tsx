@@ -6,11 +6,13 @@ import "./CreateAccountPage.scss";
 type CreateAccountPageProps = {
   existingUser: boolean;
   handleCreateAccount: (details: Account) => void;
+  handleReset: () => void;
 };
 
 const CreateAccountPage = ({
   existingUser,
   handleCreateAccount,
+  handleReset,
 }: CreateAccountPageProps) => {
   return (
     <div className="create-form">
@@ -23,6 +25,7 @@ const CreateAccountPage = ({
       <Link
         to={"/"}
         className="frgtn-pass-form__link frgtn-pass-form__link--hover"
+        onClick={handleReset}
       >
         Back to login
       </Link>

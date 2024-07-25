@@ -1,9 +1,13 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./ForgottenPasswordPage.scss";
 import { FormEvent, useState } from "react";
 import Account from "../../Types/AccountType";
 
-const ForgottenPasswordPage = () => {
+type ForgottenPasswordPageProps = {
+  handleReset: () => void;
+};
+
+const ForgottenPasswordPage = ({ handleReset }: ForgottenPasswordPageProps) => {
   const [user, setUser] = useState<Account>({
     firstname: "",
     surname: "",
@@ -14,6 +18,8 @@ const ForgottenPasswordPage = () => {
   const [newPassword, setNewPassword] = useState<string>("");
   const [userFound, setUserFound] = useState<boolean>();
   const [noUserFound, setNoUserFound] = useState<boolean>();
+  const [invalidPassword, setInvalidPassword] = useState<boolean>();
+  const [success, setSuccess] = useState<boolean>();
 
   const handleFindUser = async () => {
     try {
@@ -29,6 +35,7 @@ const ForgottenPasswordPage = () => {
 
       setUser(result);
       setUserFound(true);
+      setNoUserFound(false);
     } catch (error) {
       console.log(error);
 
@@ -47,10 +54,7 @@ const ForgottenPasswordPage = () => {
       });
       const result = await response.json();
       console.log(result);
-      //TODO - This currently doesn't navigate when user resets password.
-      //TODO - Set a message to display when user has reset password successfully
-      //TODO - Add guard clause to stop updated password being blank
-      <Navigate replace to="/" />;
+      setSuccess(true);
     } catch (error) {}
   };
 
@@ -61,6 +65,11 @@ const ForgottenPasswordPage = () => {
 
   const handleUpdateSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (newPassword == "") {
+      setInvalidPassword(true);
+      return;
+    }
+    setInvalidPassword(false);
     const updatedUser: Account = {
       firstname: user.firstname,
       surname: user.surname,
@@ -81,7 +90,6 @@ const ForgottenPasswordPage = () => {
 
   return (
     <div className="frgtn-pass-form">
-      {noUserFound ? <label>No user found with that email</label> : null}
       <div>
         {userFound ? (
           <form onSubmit={handleUpdateSubmit}>
@@ -107,10 +115,17 @@ const ForgottenPasswordPage = () => {
           </form>
         )}
       </div>
-      {/* TODO - Fix no user found message may still being present if procked before going to this page */}
+      <div>
+        {noUserFound ? <label>No user found with that email</label> : null}
+        {invalidPassword == true && (
+          <label>Please enter a valid password</label>
+        )}
+        {success == true && <label>Password successfully changed</label>}
+      </div>
       <Link
         to={"/"}
         className="frgtn-pass-form__link frgtn-pass-form__link--hover"
+        onClick={handleReset}
       >
         Back to login
       </Link>
