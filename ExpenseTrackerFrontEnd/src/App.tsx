@@ -55,6 +55,13 @@ const App = () => {
     }
   };
 
+  const handleReset = () => {
+    setUserFound(false);
+    setUserNotFound(false);
+    setExistingUser(false);
+    setTransactions([]);
+  };
+
   return (
     <div>
       <BrowserRouter>
@@ -81,6 +88,7 @@ const App = () => {
                 <CreateAccountPage
                   handleCreateAccount={handleCreateAccount}
                   existingUser={existingUser}
+                  handleReset={handleReset}
                 />
               )
             }
@@ -91,7 +99,7 @@ const App = () => {
           />
           <Route
             path="/forgotten+password"
-            element={<ForgottenPasswordPage />}
+            element={<ForgottenPasswordPage handleReset={handleReset} />}
           />
         </Routes>
       </BrowserRouter>

@@ -96,6 +96,9 @@ const LoginForm = ({
 
   return (
     <>
+      {userNotFound ? (
+        <label className="user-message">No user found with those details</label>
+      ) : null}
       {formType == "newUser" && (
         <form className="loginform" onSubmit={handleSubmit}>
           <div className="loginform__input">
@@ -210,8 +213,6 @@ const LoginForm = ({
           <button className="loginform__submit">Login</button>
         </form>
       )}
-      {/* TODO - This doubles up. Find the other and remove one. */}
-      {userNotFound ? <label>No user found with those details</label> : null}
     </>
   );
 };

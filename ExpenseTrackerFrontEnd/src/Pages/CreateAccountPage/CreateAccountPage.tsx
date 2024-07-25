@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import LoginForm from "../../Components/LoginForm/LoginForm";
 import Account from "../../Types/AccountType";
 import "./CreateAccountPage.scss";
@@ -5,11 +6,13 @@ import "./CreateAccountPage.scss";
 type CreateAccountPageProps = {
   existingUser: boolean;
   handleCreateAccount: (details: Account) => void;
+  handleReset: () => void;
 };
 
 const CreateAccountPage = ({
   existingUser,
   handleCreateAccount,
+  handleReset,
 }: CreateAccountPageProps) => {
   return (
     <div className="create-form">
@@ -19,7 +22,13 @@ const CreateAccountPage = ({
         formType="newUser"
         handleCreateAccount={handleCreateAccount}
       />
-      {/* TODO - Add link back to home page */}
+      <Link
+        to={"/"}
+        className="frgtn-pass-form__link frgtn-pass-form__link--hover"
+        onClick={handleReset}
+      >
+        Back to login
+      </Link>
     </div>
   );
 };

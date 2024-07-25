@@ -17,7 +17,6 @@ const LoginPage = ({ handleLogin, userNotFound }: LoginPageProps) => {
         userNotFound={userNotFound}
         formType="login"
       />
-      {userNotFound ? <label>No user found with those details</label> : null}
       <div className="loginpage__links">
         <Link
           className="loginpage__links loginpage__links--hover"
