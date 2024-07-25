@@ -18,9 +18,11 @@ import { handleSelectMonth, months } from "../../Utils/dateUtils";
 import RightArrow from "/up-arrow.png";
 import LeftArrow from "/down-arrow.png";
 import { calculateTotal, calculateAllTotals } from "../../Utils/numUtils";
+import { Link } from "react-router-dom";
 
 type HomePageProps = {
   transactions: Transaction[];
+  handleLogout: () => void;
 };
 
 ChartJS.register(
@@ -34,7 +36,7 @@ ChartJS.register(
   Legend
 );
 
-const HomePage = ({ transactions }: HomePageProps) => {
+const HomePage = ({ transactions, handleLogout }: HomePageProps) => {
   const [stateTransactions, setStateTransactions] = useState<Transaction[]>([]);
   const [selectedMonth, setSelectedMonth] = useState<number>(0);
   const [lastMonth, setLastMonth] = useState<number>(0);
@@ -99,7 +101,7 @@ const HomePage = ({ transactions }: HomePageProps) => {
     labels: months,
     datasets: [
       {
-        label: "Transactions",
+        label: "Amount",
         data: calculateAllTotals(transactions),
         borderColor: "rgba(255, 0, 0)",
       },
@@ -165,6 +167,9 @@ const HomePage = ({ transactions }: HomePageProps) => {
         <label>Month to month change</label>
         <Line options={options} data={lineGraphData} />
       </div>
+      <Link to={"/"} onClick={handleLogout} className="logout">
+        Logout
+      </Link>
     </>
   );
 };

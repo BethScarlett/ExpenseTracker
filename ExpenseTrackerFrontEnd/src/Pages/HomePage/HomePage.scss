@@ -5,7 +5,7 @@
 }
 
 body {
-  height: 100dvh;
+  height: fit-content;
   background: linear-gradient(to bottom, #cdf1ff, #ffb9b9);
 }
 
@@ -47,5 +47,18 @@ body {
   margin-top: 20px;
   &__transaction {
     margin-bottom: 5px;
+  }
+}
+
+.logout {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  color: black;
+  width: fit-content;
+  margin: auto;
+
+  &:hover {
+    color: red;
   }
 }
