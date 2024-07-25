@@ -1,10 +1,12 @@
 import TransactionTab from "../../Components/TransactionTab/TransactionTab";
 import Transaction from "../../Types/TransactionType";
-import { Bar } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  LineElement,
+  PointElement,
   BarElement,
   Title,
   Tooltip,
@@ -12,7 +14,7 @@ import {
 } from "chart.js";
 import "./HomePage.scss";
 import { useEffect, useState } from "react";
-import { handleSelectMonth } from "../../Utils/dateUtils";
+import { handleSelectMonth, months } from "../../Utils/dateUtils";
 import RightArrow from "/up-arrow.png";
 import LeftArrow from "/down-arrow.png";
 
@@ -23,6 +25,8 @@ type HomePageProps = {
 ChartJS.register(
   CategoryScale,
   LinearScale,
+  LineElement,
+  PointElement,
   BarElement,
   Title,
   Tooltip,
@@ -30,9 +34,9 @@ ChartJS.register(
 );
 
 const HomePage = ({ transactions }: HomePageProps) => {
-  //TODO - Refactor code to use state to store categories and amounts, and reduce functions to one
   const [stateTransactions, setStateTransactions] = useState<Transaction[]>([]);
-  const [selectedMonth, setSelectedMonth] = useState<number>(1);
+  const [selectedMonth, setSelectedMonth] = useState<number>(0);
+  const [lastMonth, setLastMonth] = useState<number>(0);
   const options = {};
 
   useEffect(() => {
@@ -40,6 +44,13 @@ const HomePage = ({ transactions }: HomePageProps) => {
     transactions.map((transaction) => {
       reverse.unshift(transaction);
     });
+
+    const transacDateSplit: string = reverse[0].date.split("-")[1];
+    if (transacDateSplit.split("")[0] == "0") {
+      setLastMonth(Number(transacDateSplit[1]));
+    } else {
+      setLastMonth(Number(transacDateSplit));
+    }
 
     setStateTransactions(reverse);
   }, []);
@@ -56,18 +67,19 @@ const HomePage = ({ transactions }: HomePageProps) => {
 
   const handleGetCategoryTotals = () => {
     let tempCategories: string[] = [];
-    let barChartTotals: number[] = [];
+    let tempTotals: number[] = [];
 
     stateTransactions.map((transaction) => {
       if (!tempCategories.includes(transaction.category)) {
         tempCategories.push(transaction.category);
-        barChartTotals.push(transaction.transaction_amount);
+        tempTotals.push(transaction.transaction_amount);
       } else {
         const i = tempCategories.indexOf(transaction.category);
-        barChartTotals[i] += transaction.transaction_amount;
+        tempTotals[i] += transaction.transaction_amount;
       }
     });
-    return barChartTotals;
+
+    return tempTotals;
   };
 
   const calculateTotal = () => {
@@ -99,8 +111,16 @@ const HomePage = ({ transactions }: HomePageProps) => {
     ],
   };
 
-  //TODO - Find a way to put these into one function
-  //TODO - Make it so you can't go past the latest month
+  const lineGraphData = {
+    labels: months,
+    datasets: [
+      {
+        label: "Transactions",
+        data: handleGetCategoryTotals(),
+        borderColor: "rgba(255, 0, 0)",
+      },
+    ],
+  };
 
   const handleIncrementMonth = () => {
     if (selectedMonth > 0) {
@@ -110,7 +130,7 @@ const HomePage = ({ transactions }: HomePageProps) => {
   };
 
   const handleDecrementMonth = () => {
-    if (selectedMonth < 11) {
+    if (selectedMonth < lastMonth - 1) {
       console.log("Selected month index is " + (selectedMonth + 1));
       setSelectedMonth(selectedMonth + 1);
     }
@@ -138,10 +158,6 @@ const HomePage = ({ transactions }: HomePageProps) => {
             onClick={handleDecrementMonth}
           />
         </div>
-        <div className="homepage-total__buttons">
-          {/* <button>Week</button>
-          <button>Month</button> */}
-        </div>
       </div>
       <div className="homepage-transactions">
         {stateTransactions.map((transaction, i) => (
@@ -156,7 +172,12 @@ const HomePage = ({ transactions }: HomePageProps) => {
         ))}
       </div>
       <div>
+        <label>Category Breakdown</label>
         <Bar options={options} data={barChartData} />
+      </div>
+      <div>
+        <label>Month to month change</label>
+        <Line options={options} data={lineGraphData} />
       </div>
     </>
   );
