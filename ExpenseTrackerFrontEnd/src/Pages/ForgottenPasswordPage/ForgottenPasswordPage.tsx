@@ -10,7 +10,7 @@ const ForgottenPasswordPage = () => {
     email: "",
     password: "",
   });
-  const [email, setEmail] = useState<string>();
+  const [email, setEmail] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [userFound, setUserFound] = useState<boolean>();
   const [noUserFound, setNoUserFound] = useState<boolean>();
@@ -47,6 +47,9 @@ const ForgottenPasswordPage = () => {
       });
       const result = await response.json();
       console.log(result);
+      //TODO - This currently doesn't navigate when user resets password.
+      //TODO - Set a message to display when user has reset password successfully
+      //TODO - Add guard clause to stop updated password being blank
       <Navigate replace to="/" />;
     } catch (error) {}
   };
@@ -77,7 +80,7 @@ const ForgottenPasswordPage = () => {
   };
 
   return (
-    <div>
+    <div className="frgtn-pass-form">
       {noUserFound ? <label>No user found with that email</label> : null}
       <div>
         {userFound ? (
@@ -104,7 +107,13 @@ const ForgottenPasswordPage = () => {
           </form>
         )}
       </div>
-      <Link to={"/"}>Back to login</Link>
+      {/* TODO - Fix no user found message may still being present if procked before going to this page */}
+      <Link
+        to={"/"}
+        className="frgtn-pass-form__link frgtn-pass-form__link--hover"
+      >
+        Back to login
+      </Link>
     </div>
   );
 };

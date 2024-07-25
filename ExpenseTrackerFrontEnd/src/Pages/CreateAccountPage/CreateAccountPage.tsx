@@ -19,6 +19,7 @@ const CreateAccountPage = ({
         formType="newUser"
         handleCreateAccount={handleCreateAccount}
       />
+      {/* TODO - Add link back to home page */}
     </div>
   );
 };
