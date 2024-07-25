@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { handleSelectMonth, months } from "../../Utils/dateUtils";
 import RightArrow from "/up-arrow.png";
 import LeftArrow from "/down-arrow.png";
+import { calculateTotal, calculateAllTotals } from "../../Utils/numUtils";
 
 type HomePageProps = {
   transactions: Transaction[];
@@ -82,23 +83,6 @@ const HomePage = ({ transactions }: HomePageProps) => {
     return tempTotals;
   };
 
-  const calculateTotal = () => {
-    let total: number = 0;
-    stateTransactions.forEach((transaction) => {
-      const transacDateSplit: string = transaction.date.split("-")[1];
-      let selectedMonthString: string = (selectedMonth + 1).toString();
-
-      if (transacDateSplit.split("")[0] == "0") {
-        selectedMonthString = "0" + selectedMonthString;
-      }
-
-      if (transacDateSplit == selectedMonthString) {
-        total += transaction.transaction_amount;
-      }
-    });
-    return Math.round(total * 100) / 100;
-  };
-
   const barChartData = {
     labels: handleGetDistinctCategories(),
     datasets: [
@@ -116,7 +100,7 @@ const HomePage = ({ transactions }: HomePageProps) => {
     datasets: [
       {
         label: "Transactions",
-        data: handleGetCategoryTotals(),
+        data: calculateAllTotals(transactions),
         borderColor: "rgba(255, 0, 0)",
       },
     ],
@@ -150,7 +134,9 @@ const HomePage = ({ transactions }: HomePageProps) => {
             id="left-arrow"
             onClick={handleIncrementMonth}
           />
-          <h1 className="homepage-total__number">£{calculateTotal()}</h1>
+          <h1 className="homepage-total__number">
+            £{calculateTotal(stateTransactions, selectedMonth)}
+          </h1>
           <img
             src={RightArrow}
             alt="Right Arrow"
