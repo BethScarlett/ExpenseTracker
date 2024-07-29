@@ -17,10 +17,17 @@ import { useEffect, useState } from "react";
 import { handleSelectMonth, months } from "../../Utils/dateUtils";
 import RightArrow from "/up-arrow.png";
 import LeftArrow from "/down-arrow.png";
-import { calculateTotal, calculateAllTotals } from "../../Utils/numUtils";
+import {
+  calculateTotal,
+  calculateCategoryTotals,
+  calculateAllTotals,
+} from "../../Utils/numUtils";
+import { Link } from "react-router-dom";
+import { handleGetDistinctCategories } from "../../Utils/transactionUtils";
 
 type HomePageProps = {
   transactions: Transaction[];
+  handleLogout: () => void;
 };
 
 ChartJS.register(
@@ -34,7 +41,7 @@ ChartJS.register(
   Legend
 );
 
-const HomePage = ({ transactions }: HomePageProps) => {
+const HomePage = ({ transactions, handleLogout }: HomePageProps) => {
   const [stateTransactions, setStateTransactions] = useState<Transaction[]>([]);
   const [selectedMonth, setSelectedMonth] = useState<number>(0);
   const [lastMonth, setLastMonth] = useState<number>(0);
@@ -56,39 +63,12 @@ const HomePage = ({ transactions }: HomePageProps) => {
     setStateTransactions(reverse);
   }, []);
 
-  const handleGetDistinctCategories = () => {
-    let barChartLabels: string[] = [];
-    stateTransactions.map((transaction) => {
-      if (!barChartLabels.includes(transaction.category)) {
-        barChartLabels.push(transaction.category);
-      }
-    });
-    return barChartLabels;
-  };
-
-  const handleGetCategoryTotals = () => {
-    let tempCategories: string[] = [];
-    let tempTotals: number[] = [];
-
-    stateTransactions.map((transaction) => {
-      if (!tempCategories.includes(transaction.category)) {
-        tempCategories.push(transaction.category);
-        tempTotals.push(transaction.transaction_amount);
-      } else {
-        const i = tempCategories.indexOf(transaction.category);
-        tempTotals[i] += transaction.transaction_amount;
-      }
-    });
-
-    return tempTotals;
-  };
-
   const barChartData = {
-    labels: handleGetDistinctCategories(),
+    labels: handleGetDistinctCategories(stateTransactions),
     datasets: [
       {
         label: "Transactions",
-        data: handleGetCategoryTotals(),
+        data: calculateCategoryTotals(stateTransactions),
         backgroundColor: ["rgba(255, 0, 0)", "rgba(0, 255, 0)"],
         borderWidth: 1,
       },
@@ -99,7 +79,7 @@ const HomePage = ({ transactions }: HomePageProps) => {
     labels: months,
     datasets: [
       {
-        label: "Transactions",
+        label: "Amount",
         data: calculateAllTotals(transactions),
         borderColor: "rgba(255, 0, 0)",
       },
@@ -165,6 +145,9 @@ const HomePage = ({ transactions }: HomePageProps) => {
         <label>Month to month change</label>
         <Line options={options} data={lineGraphData} />
       </div>
+      <Link to={"/"} onClick={handleLogout} className="logout">
+        Logout
+      </Link>
     </>
   );
 };

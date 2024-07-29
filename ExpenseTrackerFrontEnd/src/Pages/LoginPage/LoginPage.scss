@@ -5,7 +5,8 @@
 }
 
 body {
-  height: 80.5dvh;
+  min-height: 100dvh;
+  height: fit-content;
   background: linear-gradient(to bottom, #cdf1ff, #ffb9b9);
 }
 

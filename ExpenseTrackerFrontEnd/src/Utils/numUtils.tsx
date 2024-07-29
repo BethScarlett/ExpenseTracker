@@ -20,6 +20,23 @@ export const calculateTotal = (
   return Math.round(total * 100) / 100;
 };
 
+export const calculateCategoryTotals = (transactions: Transaction[]) => {
+  let tempCategories: string[] = [];
+  let categoryTotals: number[] = [];
+
+  transactions.map((transaction) => {
+    if (!tempCategories.includes(transaction.category)) {
+      tempCategories.push(transaction.category);
+      categoryTotals.push(transaction.transaction_amount);
+    } else {
+      const i = tempCategories.indexOf(transaction.category);
+      categoryTotals[i] += transaction.transaction_amount;
+    }
+  });
+
+  return categoryTotals;
+};
+
 export const calculateAllTotals = (transactions: Transaction[]) => {
   const months: string[] = [
     "01",

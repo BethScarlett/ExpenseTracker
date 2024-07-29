@@ -55,6 +55,11 @@ const App = () => {
     }
   };
 
+  const handleLogout = () => {
+    setUserFound(false);
+    handleReset();
+  };
+
   const handleReset = () => {
     setUserFound(false);
     setUserNotFound(false);
@@ -95,7 +100,12 @@ const App = () => {
           />
           <Route
             path="/home"
-            element={<HomePage transactions={transactions} />}
+            element={
+              <HomePage
+                transactions={transactions}
+                handleLogout={handleLogout}
+              />
+            }
           />
           <Route
             path="/forgotten+password"
